@@ -1,5 +1,5 @@
 class Bank_Account_System:
-    def __init__(self, username, account_number):
+    def __init__(self, username, account_number,balance):
         self.username = username
         self.account_number = account_number
         self.balance = 0.0
@@ -24,17 +24,17 @@ class Bank_Account_System:
                 f"{self.show_balance()}")
 
 class SavingsAccount(Bank_Account_System):
-    def __init__(self, username, account_number, interest_rate):
+    def __init__(self, username, account_number,interest_rate=3):
         super().__init__(username, account_number)
         self.interest_rate = interest_rate
-
+ 
     def apply_interest(self):
         interest = self.balance * (self.interest_rate / 100)
         self.balance += interest
         return f"Interest applied. New balance: {self.balance}"
 
 class CurrentAccount(Bank_Account_System):
-    def __init__(self, username, account_number, overdraft_limit):
+    def __init__(self, username, account_number, overdraft_limit=5000):
         super().__init__(username, account_number)
         self.overdraft_limit = overdraft_limit
 
@@ -49,15 +49,16 @@ if __name__ == "__main__":
     username = input("Enter account holder name: ")
     account_number = input("Enter account number: ")
 
-    account1 = Bank_Account_System(username, account_number)
+    account1 = Bank_Account_System(username, account_number, balance=5000)
     print(account1.account_details())
     print(account1.deposit(10000))
     print(account1.withdraw(1500))
     print(account1.show_balance())
+    print(account1.account_details())
 
     savings_username = input("Enter savings account holder name: ")
     savings_account_number = input("Enter savings account number: ")
-    savings = SavingsAccount(savings_username, savings_account_number, 6)
+    savings = SavingsAccount(savings_username, savings_account_number,interest_rate=6)
     print(savings.account_details())
     print(savings.deposit(5000))
     print(savings.apply_interest())
@@ -65,10 +66,10 @@ if __name__ == "__main__":
 
     current_username = input("Enter current account holder name: ")
     current_account_number = input("Enter current account number: ")
-    current = CurrentAccount(current_username, current_account_number, 200)
+    current = CurrentAccount(current_username, current_account_number,overdraft_limit=2000)
     print(current.account_details())
     print(current.deposit(1000))
-    print(current.withdraw(1100)) 
+    print(current.withdraw(1000)) 
     print(current.show_balance())
     print(current.withdraw(300)) 
     print(current.show_balance())
